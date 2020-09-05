@@ -1,11 +1,9 @@
 ﻿Feature: Trello_Website
-	In order to avoid silly mistakes
-	As a math idiot
-	I want to be told the sum of two numbers
+	These are the API and UI scenario's
+	Later on the tags will be used together with a setup and teardown.
 
-@mytag
-Scenario: Add two numbers
-	Given the first number is 50
-	And the second number is 70
-	When the two numbers are added
-	Then the result should be 120
+
+@API
+Scenario: Simple API Check
+	Given I send an API request to Trello for all boards
+	Then It will find the board "KNAB_Assignment"
