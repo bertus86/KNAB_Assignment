@@ -25,9 +25,9 @@ Because of the limited time before the intake I will start with the automated BD
 
 ## Testplan
 Because of the limited time the following steps will be done and commited to this repository:
-- create a trello account and dashboard
-- create a simple C# framework with Specflow, Selenium and RestSharp
-- create the a simple API test and a simple UI test (POC)
+- [Done] create a trello account and dashboard
+- [Done] create a simple C# framework with Specflow, Selenium and RestSharp
+- [Done] create the a simple API test and a simple UI test (POC)
 - choose which tests will be made and what parts will be covered.
 - make instructions how to use the framework
 - make a test report
