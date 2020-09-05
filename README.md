@@ -30,7 +30,7 @@ Because of the limited time the following steps will be done and commited to thi
 - create the a simple API test and a simple UI test (POC)
 - choose which tests will be made and what parts will be covered.
 - make instructions how to use the framework
-- make a test repot
+- make a test report
 
 ## Usage
 
