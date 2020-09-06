@@ -30,7 +30,9 @@ namespace KNAB_Assignment.Steps
 
             // Execute the created request
             restResponse = client.Execute<List<boards>>(request);
-            //var responseJSON = JsonConvert.DeserializeObject<boards>(restResponse.Content);
+            Assert.AreEqual("OK", restResponse.StatusDescription, "Status code is not OK");
+
+
         }
 
 
