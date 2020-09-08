@@ -7,12 +7,12 @@ namespace KNAB_Assignment.API_Responses
     class Cards
     {
 
-        public class Rootobject
+        public class Cardslist
         {
-            public Class1[] Property1 { get; set; }
+            public Card[] Property1 { get; set; }
         }
 
-        public class Class1
+        public class Card
         {
             public string id { get; set; }
             public object checkItemStates { get; set; }
