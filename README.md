@@ -4,6 +4,7 @@ In the following days I will commit all the changes done to this repository.
 
 ## Table of Contents
 - [The assignment](#Assignment)
+- [TODO list](#TODO)
 - [Test plan](#Testplan)
 - [How to use the framework](#Usage)
 
@@ -23,14 +24,22 @@ There are also 4 requirements:
 Because of the limited time before the intake I will start with the automated BDD framework in C# for both API and UI.
 
 
-## Testplan
+## TODO
 Because of the limited time the following steps will be done and commited to this repository:
 - [Done] create a trello account and dashboard
 - [Done] create a simple C# framework with Specflow, Selenium and RestSharp
 - [Done] create the a simple API test and a simple UI test (POC)
-- choose which tests will be made and what parts will be covered.
+- [Done} choose which tests will be made and what parts will be covered.
+- make the required tests
 - make instructions how to use the framework
 - make a test report
+
+## Testplan
+- Website: simple login
+- Website: Wrong login
+- Website: Make a board and remove it
+- Website: Make a board, add a list and remove all
+- UI: Make a board, Then remove it
 
 ## Usage
 
