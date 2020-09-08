@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -68,6 +69,11 @@ namespace KNAB_Assignment.Pages
         }
 
         //Check if the board is not there anymore on the main board page
-        public bool BoardNotVisible(string boardtitle) => BtnBoard(boardtitle).Displayed;
+        public void BoardNotVisible(string boardtitle)
+        {
+            //TODO. method ExpectedConditions is depricated. Look for newer solution
+            var wait = new WebDriverWait(WebDriver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath("//div[@class='board-tile-details is-badged']/div[@title='" + boardtitle + "']")));
+        }
     }
 }

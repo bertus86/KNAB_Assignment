@@ -59,8 +59,7 @@ namespace KNAB_Assignment.Steps
         public void ThenTheBoardWithTitleIsNotVisibleInTheBoardspage(string boardname)
         {
             boardsPage.HomePageBoard();
-            //TODO Exception because Selenium wants to find the element
-            //Assert.That(boardsPage.BoardNotVisible(boardname), Is.False);
+            boardsPage.BoardNotVisible(boardname);
         }
         [Then(@"it will show an error")]
         public void ThenItWillShowAnError()
