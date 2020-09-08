@@ -15,6 +15,8 @@ namespace KNAB_Assignment.Steps
     public sealed class APISteps
     {
         private IRestResponse<List<boards>> boardsResponse = null;
+        private IRestResponse<List<boards>> boardsCreateResponse = null;
+        private string boardID = null;
 
         public RestClient SetupClient()
         {
@@ -39,37 +41,69 @@ namespace KNAB_Assignment.Steps
 
 
         [When(@"I send an API request to Trello for all boards")]
-        public void GivenISendAnAPIRequestToTrelloForAllBoards()
+        public void WhenISendAnAPIRequestToTrelloForAllBoards()
         {
             RestClient client = SetupClient();
             RestRequest request = SetupRequest("/members/me/boards?fields=name,url", Method.GET);
-            // For now this is a set url. this will be a variable in a later step.
             boardsResponse = client.Execute<List<boards>>(request);
             Assert.AreEqual("OK", boardsResponse.StatusDescription, "Status code is not OK");
         }
 
         [When(@"I create a new board with name ""(.*)"" using the API")]
-        public void WhenICreateANewBoardWithNameUsingTheAPI(string p0)
+        public void WhenICreateANewBoardWithNameUsingTheAPI(string boardname)
         {
-            ScenarioContext.Current.Pending();
+            RestClient client = SetupClient();
+            RestRequest request = SetupRequest("/boards", Method.POST);
+            request.AddParameter("name", boardname);
+            boardsCreateResponse = client.Execute<List<boards>>(request);
+            Assert.AreEqual("OK", boardsCreateResponse.StatusDescription, "Status code is not OK");
+            Assert.AreEqual(boardname, boardsCreateResponse.Data[0].name, "Boardname is not created or correct");
+            boardID = boardsCreateResponse.Data[0].id;
         }
 
         [When(@"I delete a board with name ""(.*)"" using the API")]
-        public void WhenIDeleteABoardWithNameUsingTheAPI(string p0)
+        public void WhenIDeleteABoardWithNameUsingTheAPI(string boardname)
         {
-            ScenarioContext.Current.Pending();
+            RestClient client = SetupClient();
+            RestRequest request = SetupRequest("/boards/" + boardID, Method.DELETE);
+            request.AddParameter("id", boardID);
+            IRestResponse response = client.Execute(request);
+            Assert.AreEqual("OK", response.StatusDescription, "Status code is not OK");
         }
 
         [Then(@"the board with name ""(.*)"" is in the API list")]
-        public void ThenTheBoardWithNameIsInTheAPIList(string p0)
+        public void ThenTheBoardWithNameIsInTheAPIList(string boardname)
         {
-            ScenarioContext.Current.Pending();
+            RestClient client = SetupClient();
+            RestRequest request = SetupRequest("/members/me/boards?fields=name,url", Method.GET);
+            boardsResponse = client.Execute<List<boards>>(request);
+            Assert.AreEqual("OK", boardsResponse.StatusDescription, "Status code is not OK");
+            int i;
+            for (i = 0; i < boardsResponse.Data.Count; i++)
+            {
+                if (boardID == boardsResponse.Data[i].id) { break; }
+            }
+            Assert.AreEqual(boardID, boardsResponse.Data[i].id, "Expected results is " + boardname + ", but result was " + boardsResponse.Data[i].name);           
         }
 
         [Then(@"the board with name ""(.*)"" is not in the API list")]
-        public void ThenTheBoardWithNameIsNotInTheAPIList(string p0)
+        public void ThenTheBoardWithNameIsNotInTheAPIList(string boardname)
         {
-            ScenarioContext.Current.Pending();
+            //to be sure you dont have the response from last time
+            boardsResponse = null;
+            RestClient client = SetupClient();
+            RestRequest request = SetupRequest("/members/me/boards?fields=name,url", Method.GET);
+            boardsResponse = client.Execute<List<boards>>(request);
+            Assert.AreEqual("OK", boardsResponse.StatusDescription, "Status code is not OK");
+            int i=0;
+            while  (boardname!= boardsResponse.Data[i].name && i < boardsResponse.Data.Count)
+            {
+                if (boardname == boardsResponse.Data[i].name) { break; }
+                else if ((i+1)==boardsResponse.Data.Count) { break; }
+                else { i++; }
+            }
+            Assert.AreNotEqual(boardname, boardsResponse.Data[i].name, "Expected results is you dont find " + boardname + ", but result was " + boardsResponse.Data[i].name);
+
         }
 
         [Then(@"The API response will contain the following board: ""(.*)""")]
